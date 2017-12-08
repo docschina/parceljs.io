@@ -1,8 +1,8 @@
-# 🚀 Getting Started
+# 🚀 快速开始
 
-Parcel is a web application bundler, differentiated by its developer experience. It offers blazing fast performance utilizing multicore processing, and requires zero configuration.
+Parcel 是一个网络应用打包工具, 适用于经验不同的开发者. 它利用多核处理提供了极快的速度, 并且不需要任何配置.
 
-First install Parcel using Yarn or npm:
+首先通过 Yarn 或者 npm 安装 Parcel :
 
 Yarn:
 ```bash
@@ -14,7 +14,7 @@ npm:
 npm install -g parcel-bundler
 ```
 
-Create a package.json file in your project directory using:
+在你正在使用的项目目录下创建一个 package.json 文件:
 
 ```bash
 yarn init -y
@@ -24,9 +24,9 @@ or
 npm init -y
 ```
 
-Parcel can take any type of file as an entry point, but an HTML or JavaScript file is a good place to start. If you link your main JavaScript file in the HTML using a relative path, Parcel will also process it for you, and replace the reference with a URL to the output file.
+Parcel 可以使用任何类型的文件作为入口，但是最好还是使用 HTML 或 JavaScript 文件。如果在 HTML 中使用相对路径引入主要的 JavaScript 文件，Parcel 也将会对它进行处理将其替换为相对于输出文件的 URL 地址。
 
-Next, create an index.html and index.js file.
+接下来，创建一个 index.html 和 index.js 文件。
 
 ```html
 <html>
@@ -40,18 +40,18 @@ Next, create an index.html and index.js file.
 console.log("hello world");
 ```
 
-Parcel has a development server built in, which will automatically rebuild your app as you change files and supports [hot module replacement](hmr.html) for fast development. Just point it at your entry file:
+Parcel 内置了一个当你改变文件能够自动重建应用的开发服务器，而且为了实现快速开发该开发服务器支持[热模块替换](hmr.html)。只需要在入口文件指出：
 
 ```bash
 parcel index.html
 ```
 
-Now open http://localhost:1234/ in your browser. You can also override the default port with the `-p <port number>` option.
-
-Use the development server when you don't have your own server, or your app is entirely client rendered. If you do have your own server, you can run Parcel in `watch` mode instead. This still automatically rebuilds as files change and supports hot module replacement, but doesn't start a web server.
+现在在浏览器中打开 [http://localhost:1234/](http://localhost:1234/)。你也可以使用 `-p <port number>` 选项覆盖默认的端口。
+如果没有自己的服务器可使用开发服务器，或者你的应用程序完全由客户端呈现。如果有自己的服务器，你可以在`watch` 模式下运行 Parcel 。当文件改变它仍然会自动重建并支持热替换，但是不会启动 web 服务。
 
 ```bash
 parcel watch index.html
 ```
 
-When you're ready to build for production, the `build` mode turns off watching and only builds once. See the [Production](production.html) section for more details.
+当你准备在生产模式下创建，`build` 模式会关闭监听并且只建立一次。请查阅 [Production](production.html) 查看更多细节。
+
