@@ -1,73 +1,74 @@
-# 📦 Assets
+# 📦 资源(Assets)
 
-Parcel is based around assets. An asset can represent any file, but Parcel has special support for certain types of assets like JavaScript, CSS, and HTML files. Parcel automatically analyzes the dependencies referenced in these files and includes them in the output bundle. Assets of similar types are grouped together into the same output bundle. If you import an asset of a different type (for example, if you imported a CSS file from JS), it starts a child bundle and leaves a reference to it in the parent. This will be illustrated in the following sections.
+Parcel 是基于资源的，资源可以代表任意文件, 并且 Parcel 对 JavaScript，CSS，HTML 文件有更多的支持。 Parcel 会自动地分析这些文件和包中引用的依赖。相同类型的资源会被组合到同一捆绑包中。如果导入其他类型的资源（例如：你在 JS 文件中导入 CSS 文件），Parcel会启动子捆绑包，并在父捆绑包中保留对它的引用。这一点将在以下部分进行说明。
 
 ## JavaScript
 
-The most traditional file type for web bundlers is JavaScript. Parcel supports both CommonJS and ES6 module syntax for importing files. It also supports dynamic `import()` function syntax to load modules asynchronously, which is discussed in the [Code Splitting](code_splitting.html) section.
+JavaScript 是最传统的 Web 打包文件类型。 Parcel 同时支持 CommonJS 和 ES6 两种模块语法来导入文件。它也支持动态的 `import()` 函数语法异步加载模块，这一点会在[代码拆分](code_splitting.html)部分有讨论。
+
 
 ```javascript
-// Import a module using CommonJS syntax
+// 使用 CommonJS 语法导入模块
 const dep = require('./path/to/dep');
 
-// Import a module using ES6 import syntax
+// 使用 ES6 语法导入模块
 import dep from './path/to/dep';
 ```
 
-You can also import non-JavaScript assets from a JavaScript file, e.g. CSS or even an image file. When you import one of these files, it is not inlined as in some other bundlers. Instead, it is placed in a separate bundle (e.g. a CSS file) along with all of its dependencies. When using [CSS Modules](https://github.com/css-modules/css-modules), the exported classes are placed in the JavaScript bundle. Other asset types export a URL to the output file in the JavaScript bundle so you can reference them in your code.
+你也能在 JavaScript 文件中导入非 JavaScript 资源，例如：CSS 文件及图片文件。导入这类文件时，Parcel不会像其他打包工具一样内联该文件，而是将所有的依赖放置在另外一个捆绑包里（例如：一个 CSS 文件）。当使用 [CSS Modules](https://github.com/css-modules/css-modules) 时，这个导出类会被放置在 JavaScript 包里。其他的资源文件将以 URL 的形式导出到 JavaScript 包中的 output 中，以便于能在你的代码中引用。
 
 ```javascript
-// Import a CSS file
+// 引入 CSS 文件
 import './test.css';
 
-// Import a CSS file with CSS modules
+// 引入包含 CSS 模块的 CSS 文件
 import classNames from './test.css';
 
-// Import the URL to an image file
+// 以 URL 的形式引入图片
 import imageURL from './test.png';
 ```
 
-If you want to inline a file into the JavaScript bundle instead of reference it by URL, you can use the Node.js `fs.readFileSync` API to do that. The URL must be statically analyzable, meaning it cannot have any variables in it (other than `__dirname` and `__filename`).
+如果你想通过内联文件到 JavaScript 包取代 URL 引入文件的方式，你可以使用 Node.js 的 `fs.readFileSync` API。URL 必须是静态可分析的，意味着它不能有任何变量（除了`__dirname` 和 `__filename`）。
 
 ```javascript
 import fs from 'fs';
 
-// Read contents as a string
+// 以字符串的形式读取内容
 const string = fs.readFileSync(__dirname + '/test.txt', 'utf8');
 
-// Read contents as a Buffer
+// 以 Buffer 的形式读取内容
 const buffer = fs.readFileSync(__dirname + '/test.png');
 ```
 
 ## CSS
 
-CSS assets can be imported from a JavaScript or HTML file, and can contain dependencies referenced by `@import` syntax as well as references to images, fonts, etc. via the `url()` function. Other CSS files that are `@import`ed are inlined into the same CSS bundle, and `url()` references are rewritten to their output filenames. All filenames should be relative to the current CSS file.
+JavaScript 文件或 HTML 文件都能导入 CSS 资源，并且能通过 `@import` 语法引用依赖，还能通过 `url()` 函数引入图片，字体等。其他通过 `@import` 导入的 CSS 文件被内联到同一个CSS包里，并将 `url()` 引用重写为其输出文件名。所有文件名都应该与当前 CSS 文件相关联。
 
 ```css
-/* Import another CSS file */
+/* 引入其他 CSS 文件 */
 @import './other.css';
 
 .test {
-  /* Reference an image file */
+  /* 引用图像文件 */
   background: url('./images/background.png');
 }
 ```
 
-In addition to plain CSS, other compile-to-CSS languages like LESS, SASS, and Stylus are also supported, and work the same way.
+除了普通的 CSS，其他的 LESS，SASS，以及 Stylus 等CSS预处理器语言也是支持的，并且执行方法与之相同的。
 
 ## HTML
 
-HTML assets are often the entry file that you provide to Parcel, but can also be referenced by JavaScript files, e.g. to provide links to other pages. URLs to scripts, styles, media, and other HTML files are extracted and compiled as described above. The references are rewritten in the HTML so that they link to the correct output files. All filenames should be relative to the current HTML file.
+HTML 资源是提供给 Parcel 常用入口文件，但也可以被 JavaScript 文件引用，例如：提供链接给其他页面。如上所述，提取并编译脚本，样式，媒体以及其他的 HTML 文件的 URL 。引用会在HTML中被重新，以便链接到正确的输出文件。全部的文件名都应该和当前的 HTML 文件相关联。
 
 ```html
 <html>
 <body>
-  <!-- reference an image file -->
+  <!-- 引入图像文件 -->
   <img src="./images/header.png">
 
-  <a href="./other.html">Link to another page</a>
+  <a href="./other.html">链接到其他页面</a>
 
-  <!-- import a JavaScript bundle -->
+  <!-- 引入 JavaScript 捆绑包 -->
   <script src="./index.js"></script>
 </body>
 </html>
