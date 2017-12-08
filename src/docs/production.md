@@ -1,11 +1,11 @@
-# ✨ Production
+# ✨ 生产模式(Production)
 
-When it comes time to bundle your application for production, you can use Parcel's production mode.
+当需要绑定应用程序的时候，你可以使用 Parcel 的生产模式。
 
 ```bash
 parcel build entry.js
 ```
 
-This disables watch mode and hot module replacement so it will only build once. It also enables the minifier for all output bundles to reduce file size. The minifiers used by Parcel are [uglify-js](https://github.com/mishoo/UglifyJS2/) for JavaScript, [cssnano](http://cssnano.co) for CSS, and [htmlnano](https://github.com/posthtml/htmlnano) for HTML.
+这将关闭监听模式和热模块替换，所有它只会简历一次。它还会开启 minifier 来减少输出包文件的大小。Parcel 使用的 minifiers 有 JavaScript 的 [uglify-js](https://github.com/mishoo/UglifyJS2/) ，CSS 的 [cssnano](http://cssnano.co) 还有 HTML 的 [htmlnano](https://github.com/posthtml/htmlnano)。
 
-Enabling production mode also sets the `NODE_ENV=production` environment variable. Large libraries like React have development only debugging features which are disabled by setting this environment variable, which results in smaller and faster builds for production.
+启动生产模式还要设置环境变量 `NODE_ENV=production` 。像 Rect 这种只用开发调试功能的大型库，通过设置这个环境变量来禁用调试功能，从而构建的更小更快。
